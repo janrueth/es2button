@@ -1,0 +1,10 @@
+Makefile
+epsonscan2-*
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+ess2devstate
+.vscode
+build
+.DS_Store
+include/*

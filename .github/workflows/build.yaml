@@ -1,0 +1,49 @@
+on: [push, pull_request]
+
+jobs:
+  build_job:
+    # The host should always be linux
+    runs-on: ubuntu-latest
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+
+    # Build for arm64 and armv7
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            distro: bullseye
+          - arch: armv7
+            distro: bullseye
+    steps:
+      # Checkout the repo to $PWD
+      - uses: actions/checkout@v3
+      - uses: uraimo/run-on-arch-action@v2
+        name: Build artifact
+        id: build
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+
+          # Not required, but speeds up builds
+          githubToken: ${{ github.token }}
+
+          # The shell to run commands with in the container
+          shell: /bin/bash
+
+          # Install dependencies so that they are cached
+          install: |
+            apt-get --quiet update -y
+            apt-get install -y -q wget cmake file build-essential libboost-dev nlohmann-json3-dev libusb-1.0-0 libusb-1.0-0-dev
+            wget https://support.epson.net/linux/src/scanner/epsonscan2/epsonscan2-6.7.43.0-1.src.tar.gz -O /epsonscan2-6.7.43.0-1.src.tar.gz
+
+          # build
+          run: |
+            tar -C include --strip-components=2 -xzf /epsonscan2-6.7.43.0-1.src.tar.gz epsonscan2-6.7.43.0-1/src
+            cmake . -B.build
+            make -C .build -j2
+            make -C .build package
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: packages-${{ matrix.arch }}
+          path: .build/artifacts/*.deb

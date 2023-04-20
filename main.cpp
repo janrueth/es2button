@@ -164,7 +164,6 @@ class ESListener : public IESScannerDelegate {
            {ES_CNCT_KEY_DEVICE_NUMBER, {{"int", _dev.dev}}}}}}};
 
     std::string serialized_string = esDeviceDict.dump(1);
-    // std::cout << serialized_string.c_str() << std::endl;
 
     _scanner->SetConnection(serialized_string.c_str());
 
@@ -181,7 +180,6 @@ class ESListener : public IESScannerDelegate {
   }
 
   void listen() {
-    // printf("%d: Waiting for events\n", getpid());
     sigset_t set;
     sigemptyset(&set);
     sigaddset(&set, SIGINT);
@@ -385,15 +383,12 @@ int main(int argc, char* argv[]) {
 
         for (auto d : devices) {
           if (dev_name != NULL && strcmp((const char*)d.name, dev_name) != 0) {
-            printf("NOT name\n");
             continue;
           }
           if (dev_bus != NULL && atoi(dev_bus) != d.bus) {
-            printf("NOT bus\n");
             continue;
           }
           if (dev_dev != NULL && atoi(dev_dev) != d.dev) {
-            printf("NOT dev\n");
             continue;
           }
           dev = d;

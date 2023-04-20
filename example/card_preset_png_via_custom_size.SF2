@@ -76,10 +76,10 @@
                         "int": 0
                     },
                     "FileNamePrefix": {
-                        "string": "card"
+                        "string": "custom"
                     },
                     "FixedDocumentSize": {
-                        "int": 24
+                        "int": 29
                     },
                     "Folder": {
                         "int": 101
@@ -93,8 +93,21 @@
                     "Gamma": {
                         "int": 22
                     },
+                    "ImageFormat-Description": {
+                        "values": {
+                            "0": "RAW",
+                            "1": "JPEG",
+                            "2": "TIFF",
+                            "3": "unused but named PDF internally, use 6",
+                            "4": "PNG",
+                            "5": "PNM",
+                            "6": "PDF",
+                            "7": "BMP",
+                            "8": "OFD"
+                        }
+                    },
                     "ImageFormat": {
-                        "int": 6
+                        "int": 4
                     },
                     "ImageOption": {
                         "int": 0
@@ -150,8 +163,13 @@
                     "Resolution": {
                         "int": 600
                     },
+                    "ScanArea-description": {
+                        "text": "Chose FixedDocumentSize=29 to activate these. final pixel size = x / 100 * Resolution",
+                        "Unit": "in/100",
+                        "example": "want: 5.4cm -> 5.4/2.54 * 100 = 213in/100: set to 213"
+                    },
                     "ScanAreaHeight": {
-                        "int": 530
+                        "int": 337
                     },
                     "ScanAreaOffsetX": {
                         "int": 0
@@ -160,7 +178,7 @@
                         "int": 0
                     },
                     "ScanAreaWidth": {
-                        "int": 300
+                        "int": 213
                     },
                     "Threshold": {
                         "int": 110

@@ -1,0 +1,18 @@
+# copy this file to /etc/systemd/system/
+# reload systemd services: systemctl daemon-reload
+# adjust path to your es2button program that is supposed to be called
+# note: your program will be executed as nobody:scanner
+# make sure this uid:gid can access whatever it needs
+# udev rule populates %I with the es2button device
+
+[Unit]
+Description=ES2Button for %I
+
+[Service]
+User=nobody
+Group=scanner
+Type=simple
+ExecStart=/usr/bin/es2button -d "%I" /home/jan/es2button/example/example-epsonscan2.sh
+
+[Install]
+WantedBy=multi-user.target

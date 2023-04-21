@@ -12,9 +12,16 @@ When it detects a button press, it will:
 * Call a program that is passed to `es2button` with a series of environment variables that describe the scanner's state and buttons (see `example/test.sh`)
 * When the program exists, reconnect to the scanner and repeat
 
-## Todos
+# build
+Execute `./bootstrap.sh` to download epson driver code to get required header files.
+Use `cmake` to build, requires boost headers, libusb and nlohmann-json (`libboost-dev nlohmann-json3-dev libusb-1.0-0 libusb-1.0-0-dev`).
 
-* Create udev rules that automatically activate and stop the service (does this require running as a daemon?)
+## udev & systemd
+See `98-es2button.rules` and `es2button@.service` for how to listen to usb events and call systemd to launch `es2button`.
+
+# TODO
+* Make udev rules for all supported epson scanners
+* Make systemd rule not depend the es2button arg file
 * Restructe the code and split functionality into seperate classes and files
 * Reorganize repo structure and move code into separate folder
 * Add a license to the repo, can this be MIT with the epsonscan2 code, what license is their code?

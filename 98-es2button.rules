@@ -1,0 +1,18 @@
+# copy this file to /etc/udev/rules.d/
+# reload udev rules: sudo udevadm control --reload-rules
+# The udev rule listens for USB events and calls 
+# systemd es2button@ service with the correct args to es2button
+#
+# idVendor = 04b8 -> epson
+# adjust the idProduct match, idProduct=0159 -> DS-310
+# check lsusb for idProduct
+
+ACTION!="add|bind", GOTO="es2button_rules_end"
+ENV{DEVTYPE}!="usb_device", GOTO="es2button_rules_end"
+ATTR{idVendor}!="04b8", GOTO="es2button_rules_end"
+
+LABEL="es2button_rules_begin"
+
+ATTRS{idProduct}=="0159", PROGRAM="/bin/systemd-escape %s{product}:%s{busnum}:%s{devnum}", RUN+="/usr/bin/systemctl start es2button@%c.service"
+
+LABEL="es2button_rules_end"

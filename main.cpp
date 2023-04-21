@@ -243,7 +243,7 @@ class ESListener : public IESScannerDelegate {
     setenv("ES2_BUTTON_NUM", buttonNumEnvStr, 1);  // Overwrite it
     setenv("ES2_DOC_PRESENT", docLoaded ? "Yes" : "No",
            1);  // Overwrite it
-    setenv("ES2_CARD_SCANNING", docLoaded ? "Yes" : "No",
+    setenv("ES2_CARD_SCANNING", cardScanning ? "Yes" : "No",
            1);  // Overwrite it
 
     char device[sizeof(_dev.name) + 1 + 3 + 1 + 3 + 1];  // dev:000:000\0

@@ -1,4 +1,7 @@
 #!/bin/bash
+## This file will be executed after the deb package was installed
+
+set -xe
 
 if [[ ! -e /etc/es2button/entrypoint ]]; then
     ln -s /etc/es2button/default /etc/es2button/entrypoint
@@ -10,3 +13,6 @@ systemctl daemon-reload
 
 # reload udev rules
 udevadm control --reload-rules
+
+# start all stopped es2button services
+systemctl restart es2button@*.service

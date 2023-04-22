@@ -1,0 +1,3 @@
+#!/bin/bash
+## This file will be executed before the deb package is installed
+

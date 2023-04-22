@@ -3,7 +3,7 @@ project (es2button)
 set(CMAKE_INSTALL_PREFIX "/usr")
 set(CMAKE_PROJECT_VERSION_MAJOR 0)
 set(CMAKE_PROJECT_VERSION_MINOR 1)
-set(CMAKE_PROJECT_VERSION_PATCH 0)
+set(CMAKE_PROJECT_VERSION_PATCH 1)
 set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/janrueth/es2button")
 
 # download epson source
@@ -106,7 +106,10 @@ install(FILES resources/udev-es2button.rules DESTINATION /lib/udev/rules.d/ RENA
 # copy systemd rule which is activated by udev
 install(FILES resources/systemd.service DESTINATION /lib/systemd/system/ RENAME es2button@.service)
 # copy files to etc, there is a post install script that links default to entrypoint if not already exist
-install(FILES resources/default.sh DESTINATION ${ES2CONF_DIR} RENAME default)
+install(FILES resources/default.sh 
+  DESTINATION ${ES2CONF_DIR} 
+  RENAME default 
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install(FILES resources/README.md DESTINATION ${ES2CONF_DIR} RENAME README.md)
 # copy example folder to share
 install(DIRECTORY example DESTINATION share/es2button/)
@@ -118,9 +121,9 @@ set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
 set(CPACK_OUTPUT_FILE_PREFIX "./artifacts")
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "YES")
 # we'll run a script after installation to link default to entrypoint if required
-set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/resources/postinst;")
+set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/resources/preinst;${CMAKE_CURRENT_SOURCE_DIR}/resources/postinst;")
 # since we dynamically load libes2command.so
 # let's make sure the deb file depends on the corresponding package
 # we also want udev and systemd
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "epsonscan2 udev systemd")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "epsonscan2, udev, systemd")
 include(CPack)

@@ -3,13 +3,26 @@
 # The udev rule listens for USB events and calls 
 # systemd es2button@ service with the correct args to es2button
 
-ACTION!="add|bind", GOTO="es2button_rules_end"
 ENV{DEVTYPE}!="usb_device", GOTO="es2button_rules_end"
 ATTR{idVendor}!="04b8", GOTO="es2button_rules_end"
+ACTION!="add|bind", GOTO="es2button_add_rules_end"
 
-LABEL="es2button_rules_begin"
+LABEL="es2button_add_rules_begin"
 
 # these are set by the epsonscan2 rules, we just match on everything it matches
 ENV{epsonscan2_driver}=="esci*", ENV{libsane_matched}=="yes", PROGRAM="/bin/systemd-escape %s{product}:%s{busnum}:%s{devnum}", RUN+="/usr/bin/systemctl start es2button@%c.service"
+
+LABEL="es2button_add_rules_end"
+
+
+
+ACTION!="remove", GOTO="es2button_rules_end"
+
+LABEL="es2button_del_rules_begin"
+
+# should we ever need to do something on remove, here be it
+
+LABEL="es2button_del_rules_end"
+
 
 LABEL="es2button_rules_end"

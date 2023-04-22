@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ ! -e /etc/es2button/entrypoint ]]; then
+    ln -s /etc/es2button/default /etc/es2button/entrypoint
+    chmod +x /etc/es2button/entrypoint
+fi
+
+# reload systemd services
+systemctl daemon-reload
+
+# reload udev rules
+udevadm control --reload-rules

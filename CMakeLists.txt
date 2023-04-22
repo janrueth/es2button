@@ -2,8 +2,8 @@ cmake_minimum_required (VERSION 2.8.12.2)
 project (es2button)
 set(CMAKE_INSTALL_PREFIX "/usr")
 set(CMAKE_PROJECT_VERSION_MAJOR 0)
-set(CMAKE_PROJECT_VERSION_MINOR 1)
-set(CMAKE_PROJECT_VERSION_PATCH 1)
+set(CMAKE_PROJECT_VERSION_MINOR 2)
+set(CMAKE_PROJECT_VERSION_PATCH 0)
 set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/janrueth/es2button")
 
 # download epson source
@@ -20,8 +20,8 @@ endif()
 
 if(NOT ${CURRENT_EPSONSHA1} STREQUAL ${ESPONSHA1})
   message(" ${EPSONFILENAME} does not exist or has invalid sha1, downloading")
-  file(DOWNLOAD 
-    https://support.epson.net/linux/src/scanner/epsonscan2/${EPSONFILENAME} 
+  file(DOWNLOAD
+    https://support.epson.net/linux/src/scanner/epsonscan2/${EPSONFILENAME}
     ${CMAKE_CURRENT_BINARY_DIR}/${EPSONFILENAME}
     SHOW_PROGRESS
   )
@@ -106,9 +106,9 @@ install(FILES resources/udev-es2button.rules DESTINATION /lib/udev/rules.d/ RENA
 # copy systemd rule which is activated by udev
 install(FILES resources/systemd.service DESTINATION /lib/systemd/system/ RENAME es2button@.service)
 # copy files to etc, there is a post install script that links default to entrypoint if not already exist
-install(FILES resources/default.sh 
-  DESTINATION ${ES2CONF_DIR} 
-  RENAME default 
+install(FILES resources/default.sh
+  DESTINATION ${ES2CONF_DIR}
+  RENAME default
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install(FILES resources/README.md DESTINATION ${ES2CONF_DIR} RENAME README.md)
 # copy example folder to share

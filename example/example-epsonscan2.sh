@@ -5,7 +5,7 @@ if [[ "${HOME:-unset}" = "unset" ]]; then
     export HOME="/tmp/"
 fi
 
-echo "Button ${ES2_BUTTON_NUM} pressed on ${ES2_DEV} (VID:PID=${ES2_DEV_VID}:${ES2_DEV_PID})"
+echo "Button ${ES2_BUTTON_NUM} pressed on ${ES2_DEV} (${ES2_DEV_MODEL}) (VID:PID=${ES2_DEV_VID}:${ES2_DEV_PID})"
 
 if [[ ! ${ES2_DOC_PRESENT} = "Yes" ]]
 then

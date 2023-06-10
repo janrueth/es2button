@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.8.12.2)
 project (es2button)
 set(CMAKE_INSTALL_PREFIX "/usr")
 set(CMAKE_PROJECT_VERSION_MAJOR 0)
-set(CMAKE_PROJECT_VERSION_MINOR 2)
+set(CMAKE_PROJECT_VERSION_MINOR 3)
 set(CMAKE_PROJECT_VERSION_PATCH 0)
 set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/janrueth/es2button")
 
@@ -77,7 +77,9 @@ set(ES2CONF_DIR /etc/es2button)
 # we template the config.h.in file to config.h
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/templates/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/generated/config.h)
 
+set(ES2BUTTON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)
 include_directories(
+  ${ES2BUTTON_INCLUDE_DIR}
   ${ES2INCLUDE}
   ${Boost_INCLUDE_DIRS}
   ${LIBUSB_INCLUDE_DIR}
@@ -85,10 +87,11 @@ include_directories(
   nlohmann_json::nlohmann_json
 )
 
-
 add_executable(es2button
   ./src/main.cpp
 )
+
+set_property(TARGET es2button PROPERTY CXX_STANDARD 17)
 
 # make sure we've got the epsonscan2 headers when we build es2button
 add_dependencies(es2button es2untar)
@@ -112,7 +115,10 @@ install(FILES resources/default.sh
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install(FILES resources/README.md DESTINATION ${ES2CONF_DIR} RENAME README.md)
 # copy example folder to share
-install(DIRECTORY example DESTINATION share/es2button/)
+install(DIRECTORY example 
+  DESTINATION share/es2button/
+  USE_SOURCE_PERMISSIONS
+)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Jan Rüth")

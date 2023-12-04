@@ -29,10 +29,10 @@ then
     # protocol=esci2 only supported by sane
     # transport=usb only supported
     # model_from_pid
-    scanimage -d epsonscan2:${ES2_DEV}:esci2:usb:${model}:${pid_as_dec} --duplex=yes --resolution=400 --scan-area A4 --deskew=yes -b "img%d.jpeg"
+    scanimage -d "epsonscan2:${ES2_DEV}:esci2:usb:${model}:${pid_as_dec}" --duplex=yes --resolution=400 --scan-area A4 --deskew=yes -b "img%d.jpeg"
 else
     echo "Scanning plastic card"
-    scanimage -d epsonscan2:${ES2_DEV}:esci2:usb:${model}:${pid_as_dec} --duplex=yes --resolution=400 --scan-area PlasticCard --deskew=yes -b "card%d.jpeg"
+    scanimage -d "epsonscan2:${ES2_DEV}:esci2:usb:${model}:${pid_as_dec}" --duplex=yes --resolution=400 --scan-area PlasticCard --deskew=yes -b "card%d.jpeg"
 fi
 
 echo "Finished scan"

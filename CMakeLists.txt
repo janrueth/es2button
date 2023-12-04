@@ -3,7 +3,7 @@ project (es2button)
 set(CMAKE_INSTALL_PREFIX "/usr")
 set(CMAKE_PROJECT_VERSION_MAJOR 0)
 set(CMAKE_PROJECT_VERSION_MINOR 2)
-set(CMAKE_PROJECT_VERSION_PATCH 0)
+set(CMAKE_PROJECT_VERSION_PATCH 1)
 set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/janrueth/es2button")
 
 # download epson source

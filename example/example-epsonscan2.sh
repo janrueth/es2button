@@ -15,10 +15,10 @@ fi
 echo "Starting scan"
 if [[ ${ES2_CARD_SCANNING} = "No" ]]; then
     echo "Scanning A4 paper"
-    epsonscan2 -s ${ES2_DEV} $(dirname $0)/a4_preset.SF2
+    epsonscan2 -s "${ES2_DEV}" $(dirname $0)/a4_preset.SF2
 else
     echo "Scanning plastic card"
-    epsonscan2 -s ${ES2_DEV} $(dirname $0)/card_preset.SF2
+    epsonscan2 -s "${ES2_DEV}" $(dirname $0)/card_preset.SF2
 fi
 
 echo "Finished scan"

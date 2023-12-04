@@ -10,7 +10,7 @@ ACTION!="add|bind", GOTO="es2button_add_rules_end"
 LABEL="es2button_add_rules_begin"
 
 # these are set by the epsonscan2 rules, we just match on everything it matches
-ENV{epsonscan2_driver}=="esci*", ENV{libsane_matched}=="yes", PROGRAM="/bin/systemd-escape %s{product}:%s{busnum}:%s{devnum}", RUN+="/usr/bin/systemctl start es2button@%c.service"
+ENV{epsonscan2_driver}=="esci*", ENV{libsane_matched}=="yes", PROGRAM="/bin/systemd-escape '%s{product}:%s{busnum}:%s{devnum}'", RUN+="/usr/bin/systemctl start es2button@%c.service"
 
 LABEL="es2button_add_rules_end"
 

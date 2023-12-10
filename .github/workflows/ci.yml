@@ -1,0 +1,36 @@
+name: Rust check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: sudo apt-get install -y libssl-dev pkg-config clang build-essential libusb-1.0-0 libusb-1.0-0-dev g++ g++-aarch64-linux-gnu g++-arm-linux-gnueabihf
+    - name: Install rust dependencies
+      run: cargo install cross --git https://github.com/cross-rs/cross && cargo install cargo-deb cargo-sort
+    - name: Lint
+      run: make lint
+    - name: Tests usual
+      run: make test
+    - name: Build x86_64
+      run: make build && make deb
+    - name: Build aarch64
+      run: TARGET=aarch64-unknown-linux-gnu make build-cross && TARGET=aarch64-unknown-linux-gnu make deb
+    - name: Build armv7
+      run: TARGET=armv7-unknown-linux-gnueabihf make build-cross && TARGET=armv7-unknown-linux-gnueabihf make deb
+    - uses: actions/upload-artifact@v3
+      with:
+        name: packages
+        path: target/debian/*.deb

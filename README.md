@@ -1,13 +1,14 @@
 # es2button
 This projects provides means to make use of buttons on epson scanners.
 
-Please note that the code right now is just hacked together and is still the first thing that I wrote while trying to figure out how to get this working. So don't expect this to be polished, nice or be able to handle every corner case that I haven't thought of (yet).
+## Requirements
+You need to install [epsonscan2](https://support.epson.net/linux/en/epsonscan2.php). If,like me, you want to use this on an arm64 and can't find a suitable package, please see [my epsonscan2 builder](https://github.com/janrueth/epsonscan2).
 
 ## Why
 I could not seem to get `scanbd` and friends working on my Epson (DS-310) scanner. After looking through the driver code I figured I will never as the buttons are just not exposed.
 
 ## How does this work?
-It uses the official EPSON `epsonscan2` libraries to connect to the scanner and listen for the buttons.
+It uses the official EPSON [epsonscan2](https://support.epson.net/linux/en/epsonscan2.php) libraries to connect to the scanner and listen for the buttons.
 
 When it detects a button press, it will:
 * Disconnect from the scanner (allowing other programs to access it)
@@ -17,39 +18,30 @@ When it detects a button press, it will:
 
 # Build
 
-## Required libraries
-This requires boost headers, libusb and [nlohman-json](https://github.com/nlohmann/json). On a debian system you'll just need to install `libboost-dev nlohmann-json3-dev libusb-1.0-0 libusb-1.0-0-dev`.
+## Requirements
+You need [Rust](https://rustup.rs/) (tested on 1.77). In addition, you will need to install a couple of dependencies that we need during building: `pkg-config`, a C compiler (e.g., `clang`), `libusb` (library and headers), and `make` if you decide to build with make.
 
-It will also require the `epsonscan2` library headers but cmake will download these during the build.
+On a debian system you'll just need to install:
+```
+pkg-config
+make
+clang
+libusb-1.0-0
+libusb-1.0-0-dev
+```
+
+See also [Dockerfile](./Dockerfile) or run `make enter-docker` to get into a build environment that can build `es2button`.
+
 
 ## Building
-To prepare the build run
-```
-cmake . -B build
-```
-This will download the [epsonscan2](https://support.epson.net/linux/src/scanner/epsonscan2/) source and generate a Makefile in `./build`.
+To build a debian package, simply run `make`.
+The final deb file is placed in `target/debian/`.
 
-To then build `es2button`, run
-
-```
-make -C build
-```
-
-A debian package can be generated using
-```
-make -C build package
-```
-
-The final deb file is placed in `build/artifacts/`.
+Alternatively, you can also build using cargo. See the [Makefile](./Makefile) how `cargo` should be invoked.
 
 
 ## Installation
-You can either use
-```
-make -C build install
-```
-
-or install the produced deb file using `dpkg -i`.
+You can install the generated deb file using `dpkg -i`.
 
 The following section explains how `es2button` is integrated into the system.
 
@@ -86,14 +78,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 * * *
 
-This project itself makes use of [JSON for Modern C++](https://github.com/nlohmann/json) by [Niels Lohmann](https://nlohmann.me/) which is also licensed under the [MIT License](https://opensource.org/licenses/mit) (see above).
-
 This project itself links to [libusb](https://github.com/libusb/libusb) which is licensed under the [LGPL-2.1](https://opensource.org/license/lgpl-2-1/).
 
-This project itself requires headers from [epsonscan2](https://support.epson.net/linux/en/epsonscan2.php) as it dynamically loads (`dlopen`) a one of its libraries during runtime. `epsonscan2` itself is licensed under [LGPL-2.1](https://opensource.org/license/lgpl-2-1/).
-
-This project itself requires header from the [boost library](https://www.boost.org/) which itself is licensed under the [Boost Software License - Version 1.0](https://www.boost.org/LICENSE_1_0.txt).
-
-# TODO
-* Restructure/Rewrite the code and split functionality into seperate classes and files
-* Get rid of having to download the epsonscan2 data and have just a small header that describes the API without all the special epson type defs.
+This project itself uses headers from [epsonscan2](https://support.epson.net/linux/en/epsonscan2.php) as it dynamically loads (`dlopen`) a one of its libraries during runtime. `epsonscan2` itself is licensed under [LGPL-2.1](https://opensource.org/license/lgpl-2-1/).
+The headers are bundled with this source and are located in `es2command-sys/cinterface`.

@@ -1,0 +1,14 @@
+[workspace]
+members = [
+  "es2button",
+    "es2command-sys",
+    "es2command",
+]
+
+default-members = [
+  "es2command-sys",
+  "es2command",
+]
+
+resolver = "2"
+

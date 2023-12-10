@@ -1,2 +1,0 @@
-#cmakedefine EPSONSCAN2_LIB_PATH "@EPSONSCAN2_LIB_PATH@"
-#cmakedefine ES2CONF_DIR "@ES2CONF_DIR@"

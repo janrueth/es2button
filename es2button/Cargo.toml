@@ -1,0 +1,42 @@
+[package]
+name = "es2button"
+version = "0.3.0"
+authors = ["Jan Rüth <es2button@djiehmail.com>"]
+edition = "2021"
+license = "MIT"
+description = "Use buttons on epsonscan-supported scanners"
+publish = false
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
+env_logger = "0.10"
+es2command = { path = "../es2command" }
+libusb = "0.3"
+log = "0.4"
+nix = { version = "0.27", features = ["signal"] }
+signal-hook = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+
+[package.metadata.deb]
+maintainer = "Jan Rüth <es2button@djiehmail.com>"
+copyright = "2023, Jan Rüth <es2button@djiehmail.com>"
+revision = ""
+license-file = ["../LICENSE.txt", "2"]
+extended-description = """\
+Use buttons on epson scanners \
+"""
+depends = "epsonscan2, udev, systemd"
+section = "utility"
+priority = "optional"
+maintainer-scripts = "../resources"
+assets = [
+    # target/release is magic and must not start with ../
+    ["target/release/es2button", "usr/bin/", "755"],
+    ["../resources/udev-es2button.rules", "lib/udev/rules.d/61-es2button.rules", "755"],
+    ["../resources/systemd.service", "lib/systemd/system/es2button@.service", "644"],
+    ["../resources/default.sh", "etc/es2button/default", "775"],
+    ["../resources/README.md", "etc/es2button/", "444"],
+    ["../example/*", "share/es2button/", "555"],
+]

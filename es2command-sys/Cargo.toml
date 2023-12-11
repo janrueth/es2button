@@ -1,0 +1,17 @@
+[package]
+name = "es2command-sys"
+version = "0.0.1"
+authors = ["Jan Rüth <es2button@djiehmail.com>"]
+edition = "2021"
+license = "MIT"
+description = "Use buttons on epsonscan-supported scanners"
+publish = false
+
+[dependencies]
+serde = "1.0"
+serde_repr = "0.1"
+
+[build-dependencies]
+bindgen = { version = "0.69", features = ["prettyplease"] }
+cc = "1.0"
+regex = "1.10"

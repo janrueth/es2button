@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.12.2)
+cmake_minimum_required (VERSION 3.7)
 project (es2button)
 set(CMAKE_INSTALL_PREFIX "/usr")
 set(CMAKE_PROJECT_VERSION_MAJOR 0)

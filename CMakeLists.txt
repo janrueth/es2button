@@ -25,7 +25,9 @@ if(NOT ${CURRENT_EPSONSHA1} STREQUAL ${ESPONSHA1})
     HTTPHEADER "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     ${CMAKE_CURRENT_BINARY_DIR}/${EPSONFILENAME}
     SHOW_PROGRESS
+    LOG DOWNLOAD_LOG
   )
+  message(" Download-Log: ${DOWNLOAD_LOG} ")
 endif()
 
 

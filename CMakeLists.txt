@@ -22,7 +22,7 @@ if(NOT ${CURRENT_EPSONSHA1} STREQUAL ${ESPONSHA1})
   message(" ${EPSONFILENAME} does not exist or has invalid sha1, downloading")
   file(DOWNLOAD
     https://support.epson.net/linux/src/scanner/epsonscan2/${EPSONFILENAME}
-    HTTPHEADER "User-Agent: Mozilla/5.0"
+    HTTPHEADER "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
     ${CMAKE_CURRENT_BINARY_DIR}/${EPSONFILENAME}
     SHOW_PROGRESS
     LOG DOWNLOAD_LOG

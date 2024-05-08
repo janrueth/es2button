@@ -79,15 +79,17 @@ impl<'a> Listener<'a> {
             .get_bool_value_for_key(es2command::ESKEY_CARD_SCANNING)
     }
 
-    fn handle_button_press(&self, button: u8) -> Result<(), ESError> {
+    fn handle_button_press(&self, button: u8) -> Result<(), anyhow::Error> {
         debug!("Button pressed: {}", button);
 
         trace!("Checking scanner document state");
-        let doc_present = self.is_document_loaded()?;
-        let card_scanning = self.is_card_scanning()?;
+        let doc_present = self
+            .is_document_loaded()
+            .context("checking document status")?;
+        let card_scanning = self.is_card_scanning().context("checking card scanning")?;
 
         trace!("Disconnecting from scanner");
-        self.scanner.close()?;
+        self.scanner.close().context("closing scanner")?;
 
         trace!("Spawning process");
         let output = Command::new(&self.program)
@@ -107,7 +109,7 @@ impl<'a> Listener<'a> {
             .env("ES2_DEV_VID", format!("{:03}", self.device.vid))
             .env("ES2_DEV_PID", format!("{:03}", self.device.pid))
             .output()
-            .expect("failed executing program");
+            .expect("program execution failed"); // do not error here as we can't open the scanner otherwise, user needs to fix their script
 
         info!("Script status: {}", output.status);
         info!("Script stdout:");
@@ -117,7 +119,7 @@ impl<'a> Listener<'a> {
         info!("Resuming from script");
 
         trace!("Reopening connection to scanner");
-        self.scanner.open()
+        self.scanner.open().context("opening scanner")
     }
 }
 
@@ -135,7 +137,7 @@ impl<'a> es2command::ScanDelegate for Listener<'a> {
 
     fn did_press_button(&self, button: u8) {
         if let Err(err) = self.handle_button_press(button) {
-            error!("failed handling button press: {}", err);
+            error!("failed handling button press: {:#}", err);
         }
     }
 

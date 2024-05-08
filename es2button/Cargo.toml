@@ -1,6 +1,6 @@
 [package]
 name = "es2button"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["Jan Rüth <es2button@djiehmail.com>"]
 edition = "2021"
 license = "MIT"

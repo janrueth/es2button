@@ -74,9 +74,20 @@ impl<'a> Listener<'a> {
         self.scanner
             .get_bool_value_for_key(es2command::ESKEY_DOCUMENT_LOADED)
     }
+
     fn is_card_scanning(&self) -> Result<bool, ESError> {
-        self.scanner
+        match self
+            .scanner
             .get_bool_value_for_key(es2command::ESKEY_CARD_SCANNING)
+        {
+            // Not all scanners support card scanning, in this case,
+            // we get a InvalidParameter, we just report this as no card scanning
+            Err(ESError::InvalidParameter) => {
+                trace!("Got InvalidParameter for \"cardScanning\" lookup, assuming no card scanning available");
+                Ok(false)
+            }
+            x => x,
+        }
     }
 
     fn handle_button_press(&self, button: u8) -> Result<(), anyhow::Error> {

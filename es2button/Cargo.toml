@@ -12,12 +12,12 @@ anyhow = { version = "1" }
 clap = { version = "4.5", features = ["derive"] }
 env_logger = { version = "0.10", default-features = false }
 es2command = { path = "../es2command" }
-libusb = { version = "0.3", default-features = false }
 log = { workspace = true }
 nix = { version = "0.27", default-features = false, features = ["signal"] }
-signal-hook = { version = "0.3", default-features = false, features = ["iterator"] }
+rusb = { version = "0.9" }
 serde = { workspace = true }
 serde_json = { workspace = true }
+signal-hook = { version = "0.3", default-features = false, features = ["iterator"] }
 thiserror = { workspace = true }
 
 [package.metadata.deb]

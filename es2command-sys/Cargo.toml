@@ -12,6 +12,6 @@ serde = { workspace = true }
 serde_repr = { version = "0.1", default-features = false }
 
 [build-dependencies]
-bindgen = { version = "0.69", default-features = false , features = ["runtime", "prettyplease"] }
+bindgen = { version = "0.71", default-features = false, features = ["runtime", "prettyplease"] }
 cc = { version = "1.0", default-features = false }
 regex = { version = "1.10", default-features = false }

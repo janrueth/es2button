@@ -69,7 +69,7 @@ pub(crate) fn run_listener(device: UsbDevice, program: PathBuf) -> Result<(), Bo
     Ok(())
 }
 
-impl<'a> Listener<'a> {
+impl Listener<'_> {
     fn is_document_loaded(&self) -> Result<bool, ESError> {
         self.scanner
             .get_bool_value_for_key(es2command::ESKEY_DOCUMENT_LOADED)
@@ -134,7 +134,7 @@ impl<'a> Listener<'a> {
     }
 }
 
-impl<'a> es2command::ScanDelegate for Listener<'a> {
+impl es2command::ScanDelegate for Listener<'_> {
     fn did_encounter_device_communication_error(
         &self,
         _scanner: &es2command::ScannerRef,

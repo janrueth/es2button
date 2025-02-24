@@ -8,11 +8,11 @@ description = "Use buttons on epsonscan-supported scanners"
 publish = false
 
 [dependencies]
-libc = { version = "0.2", default-features = false }
-log = { workspace = true }
 es2command-sys = { path = "../es2command-sys" }
 foreign-types = { version = "0.5", default-features = false }
+libc = { version = "0.2", default-features = false }
 libloading = { version = "0.8", default-features = false }
+log = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
